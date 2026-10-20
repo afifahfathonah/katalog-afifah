@@ -30,6 +30,35 @@ export async function masuk(statusSebelumnya, formData) {
   }
 }
 
+export async function gantiPassword(statusSebelumnya, formData) {
+  const passwordBaru = formData.get("password_baru") ?? "";
+  const konfirmasi = formData.get("konfirmasi_password") ?? "";
+
+  if (!passwordBaru || !konfirmasi) {
+    return { error: "Semua field wajib diisi." };
+  }
+  if (passwordBaru.length < 8) {
+    return { error: "Password minimal 8 karakter." };
+  }
+  if (passwordBaru !== konfirmasi) {
+    return { error: "Konfirmasi password tidak sama." };
+  }
+
+  const supabase = await buatKlienAuth();
+
+  const { data: { user }, error: sessionError } = await supabase.auth.getUser();
+  if (sessionError || !user) {
+    redirect("/admin/login");
+  }
+
+  const { error } = await supabase.auth.updateUser({ password: passwordBaru });
+  if (error) {
+    return { error: "Gagal mengganti password. Coba beberapa saat lagi." };
+  }
+
+  return { sukses: "Password berhasil diganti." };
+}
+
 export async function keluar() {
   const supabase = await buatKlienAuth();
   await supabase.auth.signOut();
