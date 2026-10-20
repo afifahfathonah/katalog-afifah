@@ -1,4 +1,4 @@
-# Katalog UMKM + Order WhatsApp
+﻿# Katalog UMKM + Order WhatsApp
 
 Template workshop vibe coding Creative Hub App Talent (CHAT) 2026. Repo ini berisi tampilan aplikasi katalog UMKM; tugasmu merangkainya menjadi sistem utuh dengan bantuan AI: database, login admin, keamanan, dan pemesanan lewat WhatsApp.
 
@@ -73,6 +73,44 @@ Urutan yang disarankan: US-01, US-02, US-03, US-04, US-05, US-06, lalu fitur bon
 3. Push perubahan terakhir sebelum batas waktu.
 
 ## Tentang aplikasi ini
+
+Aplikasi katalog produk UMKM berbasis web. Pengunjung dapat melihat semua produk toko dalam satu halaman, membuka halaman detail produk, lalu langsung memesan lewat WhatsApp dengan pesan yang sudah terisi otomatis. Pemilik toko masuk ke halaman admin untuk mengelola produk dan mengganti password.
+
+### Fitur yang sudah selesai
+
+- **US-01 Katalog dari database** - Halaman utama menampilkan semua produk dari tabel `produk` di Supabase, diambil di sisi server.
+- **US-02 Detail produk** - Halaman `/produk/[id]` menampilkan foto, kategori, nama, harga, dan deskripsi satu produk; produk tidak ditemukan menampilkan halaman 404.
+- **US-03 Pesan via WhatsApp** - Tombol di halaman detail membuka WhatsApp ke nomor toko dengan pesan berisi nama dan harga produk yang sudah terisi otomatis.
+- **US-04 Login admin** - Admin masuk dengan email dan password lewat Supabase Auth; sesi tersimpan di cookie; tombol Keluar mengakhiri sesi.
+- **US-05 Ganti password** - Admin yang sedang login dapat mengganti password dengan validasi minimal 8 karakter dan konfirmasi yang sama, diproses sepenuhnya di server.
+- **US-06 Proteksi halaman admin** - Semua rute `/admin` (kecuali `/admin/login`) hanya dapat diakses setelah login, dijaga oleh `proxy.js` dan pemeriksaan sesi di setiap Server Action yang mengubah data.
+
+### Teknologi
+
+- **Next.js 16** (App Router, JavaScript)
+- **Supabase** (database PostgreSQL dan Auth)
+- **Tailwind CSS 4**
+- **Vercel** (hosting)
+
+### Environment variable yang dibutuhkan
+
+Salin `.env.example` menjadi `.env.local` lalu isi nilai berikut:
+
+- `SUPABASE_URL`
+- `SUPABASE_PUBLISHABLE_KEY`
+- `SUPABASE_SECRET_KEY`
+
+### Menjalankan di lokal
+
+```bash
+npm install
+cp .env.example .env.local
+npm run dev
+```
+
+Buka `http://localhost:3000`.
+
+---
 
 - **Nama usaha:**
 - **Pembuat:**
